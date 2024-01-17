@@ -1,6 +1,5 @@
 import {
   createClientComponentClient,
-  createRouteHandlerClient,
   createServerComponentClient,
 } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
@@ -16,13 +15,4 @@ export function useServerSupabase() {
     cookies: () => cookies(),
   });
   return supabase;
-}
-
-export async function getServerPublicUrl(imagePath: string) {
-  const supabase = useServerSupabase();
-  const {
-    data: { publicUrl: novelImage },
-  } = await supabase.storage.from("bagong_translation").getPublicUrl(imagePath);
-
-  return novelImage;
 }

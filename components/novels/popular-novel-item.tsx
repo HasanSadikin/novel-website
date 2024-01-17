@@ -1,13 +1,16 @@
-import { getServerPublicUrl, useServerSupabase } from "@/lib/useSupabase";
+import { useServerSupabase } from "@/lib/useSupabase";
 import Image from "next/image";
 
 const PopularNovelItem = async ({ novel }: { novel: any }) => {
-  const image = await getServerPublicUrl(novel.image);
+  const supabase = useServerSupabase();
+  const { data } = await supabase.storage
+    .from("bagong_translation")
+    .getPublicUrl(novel.image);
   return (
     <li className="relative">
       <div className="absolute w-full h-full">
         <Image
-          src={image}
+          src={data.publicUrl}
           alt={novel.title}
           fill
           className="object-cover blur-sm "
