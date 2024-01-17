@@ -1,0 +1,17 @@
+import { StarIcon } from "@heroicons/react/24/solid";
+
+const NovelRating = ({ rating = 0 }: { rating: number }) => {
+  return (
+    <div className=" flex flex-row items-center h-6">
+      {Array.from(Array(rating), (e, i) => {
+        return <StarIcon className="h-5 w-5 text-yellow-500" key={i} />;
+      })}
+      {rating < 5 &&
+        Array.from(Array(5 - rating), (e, i) => {
+          return <StarIcon className="h-5 w-5 text-gray-300" key={i} />;
+        })}
+    </div>
+  );
+};
+
+export default NovelRating;
