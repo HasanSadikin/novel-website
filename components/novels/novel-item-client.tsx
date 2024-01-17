@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -13,10 +13,10 @@ import NovelRating from "./novel-rating";
 const NovelItemClient = ({ novel }: { novel: any }) => {
   const [genreGroup, setGenreGroup] = useState<any[] | null>(null);
   const [image, setImage] = useState<string>("");
+  const supabase = createClientComponentClient<Database>();
 
   useEffect(() => {
     async function getImage() {
-      const supabase = createClientComponentClient<Database>();
       const {
         data: { publicUrl: novelImage },
       } = supabase.storage.from("bagong_translation").getPublicUrl(novel.image);
@@ -27,7 +27,6 @@ const NovelItemClient = ({ novel }: { novel: any }) => {
 
   useEffect(() => {
     async function getGenreGroup() {
-      const supabase = createClientComponentClient<Database>();
       const { data } = await supabase
         .from("GenreGroups")
         .select(`genre: genre_id (name, color, id)`)
