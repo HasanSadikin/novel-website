@@ -18,13 +18,6 @@ export function useServerSupabase() {
   return supabase;
 }
 
-export function useRouteSupabase() {
-  const supabase = createRouteHandlerClient<Database>({
-    cookies: () => cookies(),
-  });
-  return supabase;
-}
-
 export async function getServerPublicUrl(imagePath: string) {
   const supabase = useServerSupabase();
   const {

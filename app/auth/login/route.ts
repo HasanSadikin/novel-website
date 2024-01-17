@@ -1,26 +1,7 @@
-// import { NextResponse } from "next/server";
-// import { useRouteSupabase } from "@/lib/useSupabase";
-
-import { useRouteSupabase } from "@/lib/useSupabase";
+import { Database } from "@/types/supabase";
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-
-// export async function POST(request: Request) {
-//   const requestURL = new URL(request.url);
-//   const formData = await request.formData();
-//   const email = String(formData.get("email"));
-//   const password = String(formData.get("password"));
-
-//   const supabase = useRouteSupabase();
-
-//   await supabase.auth.signInWithPassword({
-//     email,
-//     password,
-//   });
-
-//   return NextResponse.redirect(requestURL.origin, {
-//     status: 301,
-//   });
-// }
 
 export async function POST(req: Request) {
   const requestURL = new URL(req.url);
@@ -28,7 +9,9 @@ export async function POST(req: Request) {
   const email = String(formData.get("email"));
   const password = String(formData.get("password"));
 
-  const supabase = useRouteSupabase();
+  const supabase = createRouteHandlerClient<Database>({
+    cookies: () => cookies(),
+  });
   const { error } = await supabase.auth.signInWithPassword({
     email: email,
     password: password,
