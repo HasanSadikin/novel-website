@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Lora } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar/navbar";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Lora({ weight: "400", subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Navbar />
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
