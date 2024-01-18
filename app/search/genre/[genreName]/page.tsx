@@ -1,21 +1,21 @@
-import { useServerSupabase } from "@/lib/useSupabase";
-import InteractiveSearch from "@/components/novels/Interactive-search";
 import { Suspense } from "react";
+
 import LoadingNovel from "@/components/novels/loading";
-import { Novel } from "@/types/novel";
+import InteractiveSearch from "@/components/novels/Interactive-search";
+
 import { toPascalCase, dashToWhiteSpace } from "@/utils/utils";
+import { getNovelsByGenre } from "@/lib/clientSupabase";
+import { getServerSupabase } from "@/lib/serverSupabase";
 
 const FilteredSearchByIDGenrePage = async ({
   params,
 }: {
   params: { genreName: string };
 }) => {
-  const supabase = useServerSupabase();
-  const { data: novels } = await supabase
-    .rpc("get_all_novels_based_on_genre", {
-      genrename: dashToWhiteSpace(params.genreName),
-    })
-    .returns<Novel[]>();
+  const novels = await getNovelsByGenre(
+    getServerSupabase(),
+    dashToWhiteSpace(params.genreName)
+  );
 
   if (novels == null || novels.length === 0) {
     return (

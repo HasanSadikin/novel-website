@@ -1,29 +1,40 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import NovelListClient from "./novel-list-client";
+import {
+  Suspense,
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
 import MagnifyingGlassIcon from "@heroicons/react/24/solid/MagnifyingGlassIcon";
+
+import NovelListClient from "./novel-list-client";
 import { Novel } from "@/types/novel";
+import LoadingNovel from "./loading";
 
 const InteractiveSearch = ({ novels }: { novels: Novel[] }) => {
   const [novelList, setNovelList] = useState([...novels]);
+
   const [search, setSearch] = useState("");
+  const deferredSearch = useDeferredValue(search);
 
   function handleSearch(e: any) {
     setSearch(e.target.value);
   }
 
-  useMemo(() => {
+  useEffect(() => {
     const filteredNovelName: any[] = [];
 
     [...novels].map((x) => {
-      if (x.novel_name?.toLowerCase().includes(search.toLowerCase())) {
+      if (x.novel_name?.toLowerCase().includes(deferredSearch.toLowerCase())) {
         filteredNovelName.push(x);
       }
     });
 
     setNovelList(filteredNovelName);
-  }, [search]);
+  }, [deferredSearch]);
 
   return (
     <>
@@ -32,7 +43,9 @@ const InteractiveSearch = ({ novels }: { novels: Novel[] }) => {
           <h1 className="text-center font-bold text-3xl">No Match</h1>
         </div>
       ) : (
-        <NovelListClient novels={novelList} />
+        <Suspense fallback={<LoadingNovel />}>
+          <NovelListClient novels={novelList} />
+        </Suspense>
       )}
       <div className="fixed bottom-16 h-14 bg-white/50 backdrop-blur-md flex items-center w-full">
         <div className="w-11/12 mx-auto relative">

@@ -3,31 +3,26 @@ import NovelChapterList from "@/components/novels/novel-chapter-list";
 import NovelCommentList from "@/components/novels/novel-comment-list";
 import NovelGenreList from "@/components/novels/novel-genre-list";
 import NovelRating from "@/components/novels/novel-rating";
-import { useServerSupabase } from "@/lib/useSupabase";
+import { getImagePublicURL, getNovelsBySlug } from "@/lib/clientSupabase";
+import { getServerSupabase } from "@/lib/serverSupabase";
 import Image from "next/image";
 
 const NovelDetailsPage = async ({ params }: { params: { slug: string } }) => {
-  const supabase = useServerSupabase();
-  const { data: novel } = await supabase
-    .rpc("get_novel_based_on_slug", {
-      novelslug: params.slug,
-    })
-    .single();
+  const supabase = getServerSupabase();
+  const novel = await getNovelsBySlug(supabase, params.slug);
 
   if (!novel) {
     return <p>No Novel Found</p>;
   }
 
-  const { data } = await supabase.storage
-    .from("bagong_translation")
-    .getPublicUrl(novel.image);
+  const image = await getImagePublicURL(supabase, novel.image);
 
   return (
     <div className="mb-16">
       <div className="relative min-h-10 overflow-hidden">
         <div className="object-cover aspect-[3/4] absolute top-0 w-full z-[-2]">
           <Image
-            src={data.publicUrl}
+            src={image}
             className="w-full h-full blur-sm"
             width={50}
             height={50}
@@ -38,7 +33,7 @@ const NovelDetailsPage = async ({ params }: { params: { slug: string } }) => {
         <div className="grid grid-rows-1 gap-10 w-11/12 mx-auto">
           <div className="flex justify-center items-center bg-blue pt-16">
             <Image
-              src={data.publicUrl}
+              src={image}
               className="w-1/2 aspect-[3/4] shadow-md"
               width={300}
               height={300}
@@ -53,7 +48,13 @@ const NovelDetailsPage = async ({ params }: { params: { slug: string } }) => {
               {novel.author} - {novel.origin}
             </h1>
             <NovelRating rating={novel.star} className="py-5" />
-            <NovelGenreList genres={novel.genres} className="justify-center" />
+            <div className="bg-gray-900 rounded-md pt-3 pb-5 grid grid-rows-1 gap-5 w-full mx-auto">
+              <h1 className="text-white text-center">Tags</h1>
+              <NovelGenreList
+                genres={novel.genres}
+                className="justify-center px-10"
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -1,8 +1,8 @@
-import { useServerSupabase } from "@/lib/useSupabase";
+import { getServerSupabase } from "@/lib/serverSupabase";
 import Image from "next/image";
 
 const PopularNovelItem = async ({ novel }: { novel: any }) => {
-  const supabase = useServerSupabase();
+  const supabase = getServerSupabase();
   const { data } = await supabase.storage
     .from("bagong_translation")
     .getPublicUrl(novel.image);

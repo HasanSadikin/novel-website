@@ -1,10 +1,9 @@
-import { useServerSupabase } from "@/lib/useSupabase";
+import { getServerSupabase } from "@/lib/serverSupabase";
 import InteractiveSearch from "@/components/novels/Interactive-search";
-import { Novel } from "@/types/novel";
+import { getNovels } from "@/lib/clientSupabase";
 
 const SearchPage = async () => {
-  const supabase = useServerSupabase();
-  const { data } = await supabase.rpc("get_all_novels").returns<Novel[]>();
+  const data = await getNovels(getServerSupabase());
 
   if (data == null || data.length === 0) {
     return (

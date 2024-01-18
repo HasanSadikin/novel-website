@@ -1,8 +1,8 @@
-import { useServerSupabase } from "@/lib/useSupabase";
+import { getServerSupabase } from "@/lib/serverSupabase";
 import PopularNovelItem from "./popular-novel-item";
 
 const PopularNovel = async () => {
-  const supabase = useServerSupabase();
+  const supabase = getServerSupabase();
   const { data: novels } = await supabase.from("Novels").select().limit(3);
   return (
     <ul className="grid grid-rows-3 w-screen h-3/4 overflow-hidden">

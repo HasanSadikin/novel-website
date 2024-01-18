@@ -1,14 +1,9 @@
 import NovelList from "@/components/novels/novel-list";
-import { useServerSupabase } from "@/lib/useSupabase";
-import { Novel } from "@/types/novel";
+import { getNovelsByAuthor } from "@/lib/clientSupabase";
+import { getServerSupabase } from "@/lib/serverSupabase";
 
 const SearchByAuthorPage = async ({ params }: { params: { id: number } }) => {
-  const supabase = useServerSupabase();
-  const { data: novels } = await supabase
-    .rpc("get_novels_by_author", {
-      authorid: params.id,
-    })
-    .returns<Novel[]>();
+  const novels = await getNovelsByAuthor(getServerSupabase(), params.id);
 
   return (
     <div className="mb-16">

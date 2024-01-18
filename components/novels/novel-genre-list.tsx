@@ -8,7 +8,9 @@ const NovelGenreList = ({
   className?: string;
 }) => {
   return (
-    <ul className={`flex flex-wrap gap-2 mt-2 ${className}`}>
+    <ul
+      className={`flex flex-wrap gap-1 ${className} overflow-hidden overflow-y-auto`}
+    >
       {genres?.split(",").map((genre, i) => (
         <NovelGenreItem genre={genre} key={i} />
       ))}
