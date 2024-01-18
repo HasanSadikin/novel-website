@@ -31,7 +31,9 @@ const NovelItem = async ({ novel }: { novel: Novel }) => {
         <Link href={`/novels/${novel.slug}`} className=" ">
           <h1 className="font-bold text-lg truncate">{novel.novel_name}</h1>
         </Link>
-        <h1 className="text-gray-500 text-sm italic">{novel.author}</h1>
+        <Link href={`/search/author/${novel.author_id}`}>
+          <h1 className="text-gray-500 text-sm italic">{novel.author}</h1>
+        </Link>
         <NovelRating rating={novel.star} />
         <NovelGenreList genres={novel.genres} />
       </div>

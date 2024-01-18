@@ -4,7 +4,6 @@ import NovelCommentList from "@/components/novels/novel-comment-list";
 import NovelGenreList from "@/components/novels/novel-genre-list";
 import NovelRating from "@/components/novels/novel-rating";
 import { useServerSupabase } from "@/lib/useSupabase";
-import { Novel } from "@/types/novel";
 import Image from "next/image";
 
 const NovelDetailsPage = async ({ params }: { params: { slug: string } }) => {
