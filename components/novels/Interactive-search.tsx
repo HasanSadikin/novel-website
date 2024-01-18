@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import NovelListClient from "./novel-list-client";
 import MagnifyingGlassIcon from "@heroicons/react/24/solid/MagnifyingGlassIcon";
+import { Novel } from "@/types/novel";
 
-const InteractiveSearch = ({ novels }: { novels: any[] }) => {
+const InteractiveSearch = ({ novels }: { novels: Novel[] }) => {
   const [novelList, setNovelList] = useState([...novels]);
   const [search, setSearch] = useState("");
 
@@ -12,11 +13,11 @@ const InteractiveSearch = ({ novels }: { novels: any[] }) => {
     setSearch(e.target.value);
   }
 
-  useEffect(() => {
+  useMemo(() => {
     const filteredNovelName: any[] = [];
 
     [...novels].map((x) => {
-      if (x.name.toLowerCase().includes(search.toLowerCase())) {
+      if (x.novel_name?.toLowerCase().includes(search.toLowerCase())) {
         filteredNovelName.push(x);
       }
     });

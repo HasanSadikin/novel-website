@@ -1,14 +1,10 @@
 import { useServerSupabase } from "@/lib/useSupabase";
 import InteractiveSearch from "@/components/novels/Interactive-search";
+import { Novel } from "@/types/novel";
 
-const SearchPage = async ({ params }: { params: { id: string } }) => {
-  const genreID = params.id;
+const SearchPage = async () => {
   const supabase = useServerSupabase();
-  const { data } = await supabase.from("Novels").select(
-    `
-        id, name, image, description, star, author: author_id(name), origin: origin_id(name)
-    `
-  );
+  const { data } = await supabase.rpc("get_all_novels").returns<Novel[]>();
 
   if (data == null || data.length === 0) {
     return (
@@ -19,7 +15,7 @@ const SearchPage = async ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <div className="mb-16">
+    <div className="mb-32">
       <h1 className="text-center font-bold text-3xl py-8">Search Novels</h1>
       <InteractiveSearch novels={data} />
     </div>

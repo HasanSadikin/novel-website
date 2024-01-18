@@ -1,17 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 import Image from "next/image";
 import Link from "next/link";
 
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import NovelGenreList from "./novel-genre-list";
-import { Database } from "@/types/supabase";
 import NovelRating from "./novel-rating";
 
-const NovelItemClient = ({ novel }: { novel: any }) => {
-  const [genreGroup, setGenreGroup] = useState<any[] | null>(null);
+import { Database } from "@/types/supabase";
+import { Novel } from "@/types/novel";
+
+const NovelItemClient = ({ novel }: { novel: Novel }) => {
   const [image, setImage] = useState<string>("");
   const supabase = createClientComponentClient<Database>();
 
@@ -25,28 +26,19 @@ const NovelItemClient = ({ novel }: { novel: any }) => {
     getImage();
   }, []);
 
-  useEffect(() => {
-    async function getGenreGroup() {
-      const { data } = await supabase
-        .from("GenreGroups")
-        .select(`genre: genre_id (name, color, id)`)
-        .eq("novel_id", novel.id);
-
-      setGenreGroup(data);
-    }
-    getGenreGroup();
-  }, [novel]);
-
   return (
-    <li className="bg-white border-b-2 border-gray-100 py-2 grid grid-cols-4">
+    <li className="bg-white border-b-2 border-gray-100 py-2 grid grid-cols-4 max-h-36 overflow-hidden">
       <div className="col-span-1 aspect-[3/4]">
-        <Link href={`/novels/${novel.slug}`} className=" ">
+        <Link
+          href={`/novels/${novel.slug}`}
+          className="w-full h-full object-cover"
+        >
           {image ? (
             <Image
               src={image}
-              alt={novel.title}
-              width={100}
-              height={100}
+              alt={novel.novel_name}
+              width={300}
+              height={300}
               className="w-full h-full"
             />
           ) : (
@@ -56,23 +48,11 @@ const NovelItemClient = ({ novel }: { novel: any }) => {
       </div>
       <div className="col-span-3 px-3 py-2 flex flex-col">
         <Link href={`/novels/${novel.slug}`} className=" ">
-          <h1 className="font-bold text-lg truncate">{novel.name}</h1>
+          <h1 className="font-bold text-lg truncate">{novel.novel_name}</h1>
         </Link>
-        <h1 className="text-gray-500 text-sm italic">{novel.author.name}</h1>
+        <h1 className="text-gray-500 text-sm italic">{novel.author}</h1>
         <NovelRating rating={novel.star} />
-        {genreGroup ? (
-          <NovelGenreList genres={genreGroup} />
-        ) : (
-          <ul className="flex flex-wrap gap-2 mt-2">
-            <li className="text-xs px-3 py-1 w-20 h-6 bg-gray-300 animate-pulse rounded-md"></li>
-            <li className="text-xs px-3 py-1 w-16 h-6 bg-gray-300 animate-pulse rounded-md"></li>
-            <li className="text-xs px-3 py-1 w-10 h-6 bg-gray-300 animate-pulse rounded-md"></li>
-            <li className="text-xs px-3 py-1 w-16 h-6 bg-gray-300 animate-pulse rounded-md"></li>
-            <li className="text-xs px-3 py-1 w-16 h-6 bg-gray-300 animate-pulse rounded-md"></li>
-            <li className="text-xs px-3 py-1 w-10 h-6 bg-gray-300 animate-pulse rounded-md"></li>
-            <li className="text-xs px-3 py-1 w-20 h-6 bg-gray-300 animate-pulse rounded-md"></li>
-          </ul>
-        )}
+        <NovelGenreList genres={novel.genres} />
       </div>
     </li>
   );

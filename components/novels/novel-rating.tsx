@@ -1,8 +1,14 @@
 import { StarIcon } from "@heroicons/react/24/solid";
 
-const NovelRating = ({ rating = 0 }: { rating: number }) => {
+const NovelRating = ({
+  rating = 0,
+  className,
+}: {
+  rating: number;
+  className?: string;
+}) => {
   return (
-    <div className=" flex flex-row items-center h-6">
+    <div className={`flex flex-row items-center h-6 ${className}`}>
       {Array.from(Array(rating), (e, i) => {
         return <StarIcon className="h-5 w-5 text-yellow-500" key={i} />;
       })}

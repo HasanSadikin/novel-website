@@ -5,21 +5,37 @@ import { usePathname } from "next/navigation";
 
 const NavItem = ({
   children,
+  href,
   activePathname,
   exact,
 }: {
   children: React.ReactNode;
-  activePathname: string;
+  href: string;
+  activePathname: string[];
   exact?: boolean;
 }) => {
   const pathname = usePathname();
   const checkPath = () => {
-    if (!exact) return pathname.startsWith(activePathname);
-    return pathname === activePathname;
+    if (!exact) {
+      for (let i = 0; i < activePathname.length; i++) {
+        const element = activePathname[i];
+        if (!pathname.startsWith(element)) continue;
+        return true;
+      }
+      return false;
+    }
+
+    for (let i = 0; i < activePathname.length; i++) {
+      const element = activePathname[i];
+      if (pathname !== element) continue;
+      return true;
+    }
+
+    return false;
   };
 
   return (
-    <Link href={activePathname} className="w-full">
+    <Link href={href} className="w-full">
       <li
         className={`${
           checkPath() ? "text-white bg-secondary" : "text-gray-500 "
