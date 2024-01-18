@@ -1,20 +1,36 @@
 import { Suspense } from "react";
 
 import LoadingNovel from "@/components/novels/loading";
-import InteractiveSearch from "@/components/novels/Interactive-search";
+import InteractiveSearch from "@/components/novels/interactive-search";
 
-import { toPascalCase, dashToWhiteSpace } from "@/utils/utils";
-import { getNovelsByGenre } from "@/lib/clientSupabase";
+import {
+  toPascalCase,
+  dashToWhiteSpace,
+  whiteSpaceToDash,
+} from "@/utils/utils";
+import { getClientSupabase, getNovelsByGenre } from "@/lib/clientSupabase";
 import { getServerSupabase } from "@/lib/serverSupabase";
+
+export async function generateStaticParams() {
+  const supabase = getClientSupabase();
+  const { data: slugs } = await supabase
+    .from("Genres")
+    .select("slug")
+    .returns<string[]>();
+
+  if (!slugs) return [];
+
+  return slugs.map((slug) => slug);
+}
 
 const FilteredSearchByIDGenrePage = async ({
   params,
 }: {
-  params: { genreName: string };
+  params: { slug: string };
 }) => {
   const novels = await getNovelsByGenre(
     getServerSupabase(),
-    dashToWhiteSpace(params.genreName)
+    dashToWhiteSpace(params.slug)
   );
 
   if (novels == null || novels.length === 0) {
@@ -28,7 +44,7 @@ const FilteredSearchByIDGenrePage = async ({
   return (
     <div className="mb-28">
       <h1 className="text-center font-bold text-3xl py-8">
-        <span className="text-secondary">{toPascalCase(params.genreName)}</span>{" "}
+        <span className="text-secondary">{toPascalCase(params.slug)}</span>{" "}
         Novels
       </h1>
       <Suspense fallback={<LoadingNovel />}>

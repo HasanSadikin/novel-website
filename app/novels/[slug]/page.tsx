@@ -3,9 +3,24 @@ import NovelChapterList from "@/components/novels/novel-chapter-list";
 import NovelCommentList from "@/components/novels/novel-comment-list";
 import NovelGenreList from "@/components/novels/novel-genre-list";
 import NovelRating from "@/components/novels/novel-rating";
-import { getImagePublicURL, getNovelsBySlug } from "@/lib/clientSupabase";
+import {
+  getClientSupabase,
+  getImagePublicURL,
+  getNovelsBySlug,
+} from "@/lib/clientSupabase";
 import { getServerSupabase } from "@/lib/serverSupabase";
 import Image from "next/image";
+
+export async function generateStaticParams() {
+  const supabase = getClientSupabase();
+  const { data: slugs } = await supabase.from("Novels").select("slug");
+
+  if (!slugs) return [];
+
+  return slugs?.map(({ slug }) => ({
+    slug,
+  }));
+}
 
 const NovelDetailsPage = async ({ params }: { params: { slug: string } }) => {
   const supabase = getServerSupabase();
@@ -52,6 +67,7 @@ const NovelDetailsPage = async ({ params }: { params: { slug: string } }) => {
               <h1 className="text-white text-center">Tags</h1>
               <NovelGenreList
                 genres={novel.genres}
+                genres_slugs={novel.genres_slugs}
                 className="justify-center px-10"
               />
             </div>

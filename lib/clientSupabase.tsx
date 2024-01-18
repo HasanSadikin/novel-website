@@ -22,10 +22,10 @@ type SC = ReturnType<typeof createServerComponentClient<Database>>;
 type CC = ReturnType<typeof createClientComponentClient<Database>>;
 
 export async function getNovelsBySlug(supabase: SC | CC, slug: string) {
-  const data = await supabase
+  const { data } = await supabase
     .rpc("get_novel_by_slug", { novelslug: slug })
     .single();
-  return data.data;
+  return data;
 }
 
 export async function getNovelsByAuthor(supabase: SC | CC, author: number) {

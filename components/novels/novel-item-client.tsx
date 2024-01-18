@@ -24,7 +24,7 @@ const NovelItemClient = ({ novel }: { novel: Novel }) => {
       setImage(novelImage);
     }
     getImage();
-  }, []);
+  }, [novel.image]);
 
   return (
     <li className="bg-white border-b-2 border-gray-200 py-2 grid grid-cols-7 max-h-56 overflow-hidden">
@@ -56,6 +56,7 @@ const NovelItemClient = ({ novel }: { novel: Novel }) => {
         <NovelRating rating={novel.star} className="py-4" />
         <NovelGenreList
           genres={novel.genres}
+          genres_slugs={novel.genres_slugs}
           className="overflow-hidden h-[53px]"
         />
       </div>

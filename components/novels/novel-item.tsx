@@ -42,6 +42,7 @@ const NovelItem = async ({ novel }: { novel: Novel }) => {
         <NovelRating rating={novel.star} className="py-4" />
         <NovelGenreList
           genres={novel.genres}
+          genres_slugs={novel.genres_slugs}
           className="overflow-hidden h-[53px]"
         />
       </div>

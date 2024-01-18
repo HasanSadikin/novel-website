@@ -1,6 +1,6 @@
 import { getServerSupabase } from "@/lib/serverSupabase";
-import InteractiveSearch from "@/components/novels/Interactive-search";
 import { getNovels } from "@/lib/clientSupabase";
+import InteractiveSearch from "@/components/novels/interactive-search";
 
 const SearchPage = async () => {
   const data = await getNovels(getServerSupabase());

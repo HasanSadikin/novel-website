@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Suspense,
-  useDeferredValue,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { Suspense, useDeferredValue, useEffect, useState } from "react";
 
 import MagnifyingGlassIcon from "@heroicons/react/24/solid/MagnifyingGlassIcon";
 
@@ -34,7 +28,7 @@ const InteractiveSearch = ({ novels }: { novels: Novel[] }) => {
     });
 
     setNovelList(filteredNovelName);
-  }, [deferredSearch]);
+  }, [deferredSearch, novels]);
 
   return (
     <>

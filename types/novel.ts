@@ -9,4 +9,5 @@ export interface Novel {
   origin: string;
   author_id: string;
   genres: string;
+  genres_slugs: string;
 }

@@ -19,7 +19,7 @@ export default function Home() {
       setTodos(data);
     }
     fetchData();
-  }, [user]);
+  }, [user, supabase]);
 
   async function signIn() {
     const { data, error } = await supabase.auth.signInWithPassword({
