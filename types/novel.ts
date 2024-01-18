@@ -7,5 +7,6 @@ export interface Novel {
   star: number;
   author: string;
   origin: string;
+  author_id: string;
   genres: string;
 }
