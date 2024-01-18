@@ -3,11 +3,7 @@ import { Suspense } from "react";
 import LoadingNovel from "@/components/novels/loading";
 import InteractiveSearch from "@/components/novels/interactive-search";
 
-import {
-  toPascalCase,
-  dashToWhiteSpace,
-  whiteSpaceToDash,
-} from "@/utils/utils";
+import { toPascalCase, dashToWhiteSpace } from "@/utils/utils";
 import { getClientSupabase, getNovelsByGenre } from "@/lib/clientSupabase";
 import { getServerSupabase } from "@/lib/serverSupabase";
 
