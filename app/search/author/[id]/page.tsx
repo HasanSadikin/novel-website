@@ -1,9 +1,23 @@
 import NovelList from "@/components/novels/novel-list";
-import { getNovelsByAuthor } from "@/lib/clientSupabase";
+import { getClientSupabase, getNovelsByAuthor } from "@/lib/clientSupabase";
 import { getServerSupabase } from "@/lib/serverSupabase";
 
-const SearchByAuthorPage = async ({ params }: { params: { id: number } }) => {
-  const novels = await getNovelsByAuthor(getServerSupabase(), params.id);
+export async function generateStaticParams() {
+  const supabase = getClientSupabase();
+  const { data } = await supabase.from("Authors").select("id");
+
+  if (!data) return [];
+
+  return data?.map((data) => ({
+    id: String(data.id),
+  }));
+}
+
+const SearchByAuthorPage = async ({ params }: { params: { id: string } }) => {
+  const novels = await getNovelsByAuthor(
+    getServerSupabase(),
+    Number(params.id)
+  );
 
   return (
     <div className="mb-16">
