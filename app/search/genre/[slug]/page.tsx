@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 
 import LoadingNovel from "@/components/novels/loading";
-import InteractiveSearch from "@/components/novels/interactive-search";
+import InteractiveSearch from "@/components/search/interactive-search";
 
 import { toPascalCase, dashToWhiteSpace } from "@/utils/utils";
 import { getClientSupabase, getNovelsByGenre } from "@/lib/clientSupabase";

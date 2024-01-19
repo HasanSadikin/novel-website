@@ -4,9 +4,9 @@ import { Suspense, useDeferredValue, useEffect, useState } from "react";
 
 import MagnifyingGlassIcon from "@heroicons/react/24/solid/MagnifyingGlassIcon";
 
-import NovelListClient from "./novel-list-client";
+import NovelListClient from "@/components/novels/novel-list-client";
 import { Novel } from "@/types/novel";
-import LoadingNovel from "./loading";
+import LoadingNovel from "@/components/novels/loading";
 
 const InteractiveSearch = ({ novels }: { novels: Novel[] }) => {
   const [novelList, setNovelList] = useState([...novels]);
