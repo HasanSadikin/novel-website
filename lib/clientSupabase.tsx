@@ -25,6 +25,13 @@ export async function getNovelsBySlug(supabase: SC | CC, slug: string) {
   const { data } = await supabase
     .rpc("get_novel_by_slug", { novelslug: slug })
     .single();
+  return data as Novel;
+}
+
+export async function getBookmarksByID(supabase: SC | CC, id: string) {
+  const { data } = await supabase
+    .rpc("get_bookmarks_by_user_id", { userid: id })
+    .returns<Novel[]>();
   return data;
 }
 

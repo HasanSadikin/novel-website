@@ -17,9 +17,13 @@ export async function POST(req: Request) {
     password: password,
   });
 
+  console.log(requestURL.pathname);
+
   if (error) {
     return NextResponse.redirect(`${requestURL.origin}`);
   }
 
-  return NextResponse.redirect(new URL("/todos", req.url));
+  return NextResponse.redirect(new URL("/", req.url), {
+    status: 301,
+  });
 }

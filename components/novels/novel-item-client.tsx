@@ -50,9 +50,15 @@ const NovelItemClient = ({ novel }: { novel: Novel }) => {
         <Link href={`/novels/${novel.slug}`} className=" ">
           <h1 className="font-bold text-lg truncate">{novel.novel_name}</h1>
         </Link>
-        <Link href={`/search/author/${novel.author_id}`}>
-          <h1 className="text-gray-500 text-sm italic">{novel.author}</h1>
-        </Link>
+        <div className="flex gap-1">
+          <Link href={`/search/author/${novel.author_id}`}>
+            <h1 className="text-gray-500 text-sm italic">{novel.author}</h1>
+          </Link>
+          <span>{" - "}</span>
+          <Link href={`/search/origin/${novel.origin}`}>
+            <h1 className="text-gray-500 text-sm italic">{novel.origin}</h1>
+          </Link>
+        </div>
         <NovelRating rating={novel.star} className="py-4" />
         <NovelGenreList
           genres={novel.genres}

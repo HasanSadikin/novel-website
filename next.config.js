@@ -8,6 +8,20 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/novels",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/genre",
+        destination: "/search",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
