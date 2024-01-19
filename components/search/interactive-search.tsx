@@ -10,8 +10,8 @@ import LoadingNovel from "@/components/novels/loading";
 
 const InteractiveSearch = ({ novels }: { novels: Novel[] }) => {
   const [novelList, setNovelList] = useState([...novels]);
-
   const [search, setSearch] = useState("");
+
   const deferredSearch = useDeferredValue(search);
 
   function handleSearch(e: any) {

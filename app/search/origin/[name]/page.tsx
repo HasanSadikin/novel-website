@@ -3,12 +3,7 @@ import { Suspense } from "react";
 import LoadingNovel from "@/components/novels/loading";
 import InteractiveSearch from "@/components/search/interactive-search";
 
-import { toPascalCase, dashToWhiteSpace } from "@/utils/utils";
-import {
-  getClientSupabase,
-  getNovelsByGenre,
-  getNovelsByOrigin,
-} from "@/lib/clientSupabase";
+import { getClientSupabase, getNovelsByOrigin } from "@/lib/clientSupabase";
 import { getServerSupabase } from "@/lib/serverSupabase";
 
 export async function generateStaticParams() {

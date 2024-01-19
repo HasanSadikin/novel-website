@@ -3,17 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const NavItem = ({
-  children,
-  href,
-  activePathname,
-  exact,
-}: {
+interface Props {
   children: React.ReactNode;
   href: string;
   activePathname: string[];
   exact?: boolean;
-}) => {
+}
+
+const NavItem = ({ children, href, activePathname, exact }: Props) => {
   const pathname = usePathname();
   const checkPath = () => {
     if (!exact) {

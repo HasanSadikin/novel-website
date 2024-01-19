@@ -1,14 +1,12 @@
 import NovelGenreItem from "./nove-genre-item";
 
-const NovelGenreList = ({
-  genres,
-  className,
-  genres_slugs,
-}: {
+interface Props {
   genres: string | null;
   className?: string;
   genres_slugs: string;
-}) => {
+}
+
+const NovelGenreList = ({ genres, className, genres_slugs }: Props) => {
   const names = genres?.split(",");
   const slugs = genres_slugs?.split(",");
 

@@ -1,7 +1,11 @@
-import { whiteSpaceToDash } from "@/utils/utils";
 import Link from "next/link";
 
-const NovelGenreItem = ({ genre, slug }: { genre: string; slug: string }) => {
+interface Props {
+  genre: string;
+  slug: string;
+}
+
+const NovelGenreItem = ({ genre, slug }: Props) => {
   return (
     <Link
       href={`/search/genre/${slug}`}

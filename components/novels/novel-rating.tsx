@@ -1,12 +1,11 @@
 import { StarIcon } from "@heroicons/react/24/solid";
 
-const NovelRating = ({
-  rating = 0,
-  className,
-}: {
+interface Props {
   rating: number;
   className?: string;
-}) => {
+}
+
+const NovelRating = ({ rating = 0, className }: Props) => {
   return (
     <div className={`flex flex-row items-center h-6 ${className}`}>
       {Array.from(Array(rating), (e, i) => {
