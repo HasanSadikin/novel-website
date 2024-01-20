@@ -23,6 +23,7 @@ const NovelDetails = ({ image, novel }: Props) => {
             width={50}
             height={50}
             alt={novel?.novel_name}
+            priority
           />
         </div>
         <div className="bg-black/80 absolute top-0 w-full aspect-[3/4] z-[-1] h-full"></div>
@@ -30,6 +31,7 @@ const NovelDetails = ({ image, novel }: Props) => {
           <div className="items-center flex justify-center">
             <div className="aspect-[3/4] w-2/3 relative ">
               <Image
+                priority
                 src={image}
                 alt={novel?.novel_name}
                 fill

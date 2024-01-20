@@ -26,7 +26,9 @@ async function BookmarkNovels() {
       {novels.length > 0 ? (
         <NovelList novels={novels} />
       ) : (
-        <h1>No Bookmarked Novels</h1>
+        <h1 className="text-center font-bold text-lg py-8">
+          No Bookmarked Novels
+        </h1>
       )}
     </>
   );
