@@ -27,6 +27,7 @@ const NovelAction = async ({ novel }: { novel: Novel }) => {
         {/* <BookmarkButton novel={novel} toggle={bookmarked} />
         <BookmarkButton novel={novel} toggle={bookmarked} /> */}
       </div>
+      <div className="w-full h-10 border-b-2 border-gray-300"></div>
     </>
   );
 };

@@ -9,6 +9,7 @@ type Props = {
 export const LoggedUser = ({ user }: Props) => {
   return (
     <>
+      <h1 className="text-center font-bold text-3xl py-8">Your Account</h1>
       <div className="text-white mt-10 w-40 aspect-square mx-auto bg-secondary rounded-full flex items-center justify-center text-3xl">
         <UserCircleIcon className="w-20 h-20" />
       </div>

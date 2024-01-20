@@ -28,7 +28,7 @@ const NovelItemClient = ({ novel }: { novel: Novel }) => {
 
   return (
     <li className="bg-white border-b-2 border-gray-200 py-2 grid grid-cols-7 max-h-56 overflow-hidden">
-      <div className="col-span-2 aspect-[3/4]">
+      <div className="col-span-2 aspect-[3/4] relative">
         <Link
           href={`/novels/${novel.slug}`}
           className="w-full h-full object-cover"
@@ -37,9 +37,8 @@ const NovelItemClient = ({ novel }: { novel: Novel }) => {
             <Image
               src={image}
               alt={novel.novel_name}
-              width={300}
-              height={300}
-              className="w-full h-full"
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           ) : (
             <NoImage />

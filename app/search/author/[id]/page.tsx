@@ -1,6 +1,8 @@
+import LoadingNovel from "@/components/novels/loading";
 import NovelList from "@/components/novels/novel-list";
 import { getClientSupabase, getNovelsByAuthor } from "@/lib/clientSupabase";
 import { getServerSupabase } from "@/lib/serverSupabase";
+import { Suspense } from "react";
 
 export async function generateStaticParams() {
   const supabase = getClientSupabase();
@@ -13,14 +15,11 @@ export async function generateStaticParams() {
   }));
 }
 
-const SearchByAuthorPage = async ({ params }: { params: { id: string } }) => {
-  const novels = await getNovelsByAuthor(
-    getServerSupabase(),
-    Number(params.id)
-  );
+const Search = async ({ id }: { id: string }) => {
+  const novels = await getNovelsByAuthor(getServerSupabase(), Number(id));
 
   return (
-    <div className="mb-16">
+    <>
       {novels ? (
         <div className="flex font-bold text-3xl py-8 gap-2 justify-center items-center">
           <div className="max-w-xs">
@@ -34,6 +33,16 @@ const SearchByAuthorPage = async ({ params }: { params: { id: string } }) => {
         </h1>
       )}
       <NovelList novels={novels} />
+    </>
+  );
+};
+
+const SearchByAuthorPage = async ({ params }: { params: { id: string } }) => {
+  return (
+    <div className="mb-16">
+      <Suspense fallback={<LoadingNovel />}>
+        <Search id={params.id} />
+      </Suspense>
     </div>
   );
 };

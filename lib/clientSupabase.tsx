@@ -60,3 +60,12 @@ export async function getNovels(supabase: SC | CC) {
   const data = await supabase.rpc("get_all_novels").returns<Novel[]>();
   return data.data;
 }
+
+export async function wrapPromise<T>(p: Promise<T>, duration: number) {
+  return new Promise((resolve) => {
+    setTimeout(async () => {
+      const data = await p;
+      resolve(data);
+    }, duration);
+  });
+}

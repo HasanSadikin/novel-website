@@ -1,13 +1,15 @@
 import BookmarkError from "@/components/bookmark/bookmark-error";
 import BookmarkGuestView from "@/components/bookmark/bookmark-guest-view";
+import LoadingNovel from "@/components/novels/loading";
 import NovelList from "@/components/novels/novel-list";
 
 import { getBookmarksByID } from "@/lib/clientSupabase";
 import { getServerSupabase } from "@/lib/serverSupabase";
+import { Suspense } from "react";
 
 type Props = {};
 
-export default async function page({}: Props) {
+async function BookmarkNovels() {
   const supabase = getServerSupabase();
   const {
     data: { user },
@@ -21,12 +23,22 @@ export default async function page({}: Props) {
 
   return (
     <>
-      <h1 className="text-center font-bold text-3xl py-8">Bookmark Novels</h1>
       {novels.length > 0 ? (
         <NovelList novels={novels} />
       ) : (
         <h1>No Bookmarked Novels</h1>
       )}
+    </>
+  );
+}
+
+export default async function page({}: Props) {
+  return (
+    <>
+      <h1 className="text-center font-bold text-3xl py-8">Bookmark Novels</h1>
+      <Suspense fallback={<LoadingNovel />}>
+        <BookmarkNovels />
+      </Suspense>
     </>
   );
 }

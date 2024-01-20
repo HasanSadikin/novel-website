@@ -12,7 +12,8 @@ const PopularNovelItem = async ({ novel }: { novel: any }) => {
           src={image}
           alt={novel.title}
           fill
-          className="object-cover blur-sm "
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
         <div className="absolute w-full h-full bg-black/70 z-[1]"></div>
       </div>
